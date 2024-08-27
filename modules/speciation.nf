@@ -1,6 +1,6 @@
 process SPECIATION {
 
-    //label 'speciation_container'
+    label 'speciation_container'
 
     tag { sample_id }
 
@@ -14,7 +14,7 @@ process SPECIATION {
     
     """
     fasta_file="${fasta_file}"
-    cat fasta_file | docker run -i --platform linux/x86_64 speciator:v4.0.0 > "$sample_id"_speciator_output.json
+    python3 speciator.py fasta_file /libraries /bactinspector/data/taxon_info.pqt > "$sample_id"_speciator_output.json
     """
     
 
