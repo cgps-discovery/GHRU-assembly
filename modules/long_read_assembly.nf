@@ -22,7 +22,7 @@ process ASSEMBLY_DRAGONFLYE{
     """
     dragonflye --gsize $GSIZE --reads $LR --cpus $task.cpus --ram $task.memory \
     --prefix $sample_id --racon 1 --medaka 1 --model $medaka_model \
-    --outdir "$sample_id" --force --keepfiles --depth 150
+    --outdir "$sample_id" --force --keepfiles --depth 150 --nanohq
     mv "$sample_id"/"$sample_id".fa $fasta
     """
 }

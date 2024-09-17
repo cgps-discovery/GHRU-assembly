@@ -31,13 +31,13 @@ workflow LR_ASSEMBLY{
     NANOPLOT(read_with_genome_size)
 
     //trim adapters with porechop
-    PORECHOP(read_with_genome_size)
+    //PORECHOP(read_with_genome_size)
     
     //processed_long_read assembly channel
-    preprocessed_long_reads=PORECHOP.out.long_read_assembly
+    //preprocessed_long_reads=PORECHOP.out.long_read_assembly
 
     //do long read assembly with dragonflye
-    ASSEMBLY_DRAGONFLYE(preprocessed_long_reads, params.medaka_model)
+    ASSEMBLY_DRAGONFLYE(read_with_genome_size, params.medaka_model)
 
     //assess assembly using quast
     QUAST(ASSEMBLY_DRAGONFLYE.out, "long")
