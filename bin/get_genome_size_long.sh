@@ -1,6 +1,7 @@
 #!/bin/bash
 if [[ -z "$GSIZE" ]]; then
     echo $GSIZE
+    #sed -i.bak $'s/\t/    /g' $LR 
     kmc -sm -m8 -t4 -k21 -ci10 $LR km_file . 2>&1 | tee kmc_log.txt
     BP=$(grep -i "No. of unique counted k-mers" kmc_log.txt | awk '{print $NF}')
     CALCGSIZE=$(printf "%.0f" ${BP})

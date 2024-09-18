@@ -13,7 +13,8 @@ process CALCULATE_GENOME_SIZE{
     script:
 
     """
-    LR=$long_reads
+    zcat $long_reads | sed \$'s/\t/    /g' > temp.fastq
+    LR=temp.fastq
     GSIZE=$genome_size 
     source get_genome_size_long.sh
     genome_size=`cat gsize.txt`

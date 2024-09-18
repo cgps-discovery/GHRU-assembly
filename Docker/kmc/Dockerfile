@@ -3,7 +3,7 @@ FROM ubuntu:22.04 as base
 LABEL authors="Varun Shamanna" \
       description="Docker image for kmc"
 
-RUN apt update; apt-get install -y  gcc procps jq wget bash
+RUN apt update; apt-get install -y  gcc procps jq wget bash sed
 
 RUN mkdir -p /opt/conda 
 
@@ -18,4 +18,5 @@ RUN conda create -n kmc -c bioconda kmc  && conda clean -a
 
 RUN conda create -n coreutils -c conda-forge -c bioconda coreutils bc gawk grep && conda clean -a
 
-ENV PATH /opt/miniconda/bin:/opt/miniconda/condabin:/opt/miniconda/envs/kmc/bin:/opt/miniconda/envs/coreutils/bin
+#ENV PATH /opt/miniconda/bin:/opt/miniconda/condabin:/opt/miniconda/envs/kmc/bin:/opt/miniconda/envs/coreutils/bin
+ENV PATH /opt/miniconda/bin:/opt/miniconda/condabin:/opt/miniconda/envs/kmc/bin:/opt/miniconda/envs/coreutils/bin:/usr/bin:/bin
