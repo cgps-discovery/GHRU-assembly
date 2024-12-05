@@ -121,3 +121,53 @@ process COMBINE_CONTAMINATION_REPORTS{
     mv $gunc_merge_out/"\$final_report" $contamination_report
     """
 }
+
+process CONFINDR_FASTQS {
+    label 'confindr_containes'
+
+    tag { sample_id }
+    
+    input:
+    tuple val(sample_id), path(short_reads1), path(short_reads2)
+    path('confindr_db')
+
+    output:
+    tuple val(sample_id), path(contamination_report)
+
+    script:
+    read_one="${short_reads1}"
+    read_two="${short_reads2}"
+    fastqs="${sample_id}_fastqs"
+    confindr_out="${sample_id}_confindr_out"
+
+    """
+    mkdir $fastqs
+    cp $read_one $fastqs
+    cp $read_two $fastqs
+    confindr -i $fastqs -o $confindr_out --rmlst -dt confindr_db/
+    """
+}
+
+process CONFINDR_FASTAS {
+    label 'confindr_containes'
+
+    tag { sample_id }
+    
+    input:
+    tuple val(sample_id), path(fasta)
+    path('confindr_db')
+
+    output:
+    tuple val(sample_id), path(contamination_report)
+
+    script:
+    fasta_file="${fasta}"
+    fasta_folder="${sample_id}_fasta"
+    confindr_out="${sample_id}_confindr_out"
+
+    """
+    mkdir $fasta_folder
+    cp $fasta_file $fasta_folder
+    confindr -i $fasta_folder -o $confindr_out --rmlst -dt confindr_db/ --fasta
+    """
+}
